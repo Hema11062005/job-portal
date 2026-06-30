@@ -10,40 +10,49 @@ function Dashboard({ phone }) {
   const [unreadCount, setUnreadCount] = useState(0);
   const [message, setMessage] = useState("");
 
+  const BACKEND_URL = "https://job-portal-bac.onrender.com";
+
   const fetchJobs = async () => {
-    const res = await axios.get("http://job-portal-bac.onrender.com/jobs");
-    setJobs(res.data);
+    try {
+      const res = await axios.get(`${BACKEND_URL}/jobs`);
+      setJobs(res.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const fetchApplications = async () => {
-    const res = await axios.get(
-      `http://job-portal-bac.onrender.com/applications/${phone}`
-    );
-    setApplications(res.data);
+    try {
+      const res = await axios.get(
+        `${BACKEND_URL}/applications/${phone}`
+      );
+      setApplications(res.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const fetchNotifications = async () => {
-    const res = await axios.get(
-      `http://job-portal-bac.onrender.com/notifications/${phone}`
-    );
+    try {
+      const res = await axios.get(
+        `${BACKEND_URL}/notifications/${phone}`
+      );
 
-    setNotifications(res.data);
+      setNotifications(res.data);
 
-    const unread = res.data.filter((n) => !n.read).length;
-    setUnreadCount(unread);
+      const unread = res.data.filter((n) => !n.read).length;
+      setUnreadCount(unread);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  // ✅ FIX 1: Add eslint disable (top useEffect)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchJobs();
-    fetchAppliyour-backend.onrender.comcations();
+    fetchApplications();
     fetchNotifications();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // ✅ FIX 2: socket effect
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     socket.emit("registerUser", phone);
 
@@ -56,22 +65,25 @@ function Dashboard({ phone }) {
     socket.on("notification", handleNotification);
 
     return () => socket.off("notification", handleNotification);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phone]);
 
   const applyJob = async (jobTitle) => {
-    const res = await axios.post("http://job-portal-bac.onrender.com/apply", {
-      jobTitle,
-      applicantPhone: phone,
-    });
+    try {
+      const res = await axios.post(`${BACKEND_URL}/apply`, {
+        jobTitle,
+        applicantPhone: phone,
+      });
 
-    setMessage(res.data.message);
-    fetchApplications();
+      setMessage(res.data.message);
+      fetchApplications();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <div>
-      {/* NAVBAR */}
+      {/* Navbar */}
       <div className="navbar">
         <h1>Candidate Dashboard</h1>
 
@@ -86,7 +98,7 @@ function Dashboard({ phone }) {
         </div>
       </div>
 
-      {/* NOTIFICATION PANEL */}
+      {/* Notification Panel */}
       {showNotifications && (
         <div className="notification-panel">
           <h3>Notifications</h3>
@@ -96,17 +108,17 @@ function Dashboard({ phone }) {
           ) : (
             notifications.map((note, i) => (
               <div key={i} className="notification-card">
-                {note.message}
+                <p>{note.message}</p>
               </div>
             ))
           )}
         </div>
       )}
 
-      {/* MESSAGE */}
+      {/* Success Message */}
       {message && <p>{message}</p>}
 
-      {/* JOBS */}
+      {/* Available Jobs */}
       <h1>Available Jobs</h1>
 
       {jobs.map((job, index) => {
@@ -117,8 +129,9 @@ function Dashboard({ phone }) {
         return (
           <div className="job-card" key={index}>
             <h2>{job.title}</h2>
-            <p>{job.company}</p>
-            <p>{job.location}</p>
+            <p>Company: {job.company}</p>
+            <p>Location: {job.location}</p>
+            <p>Salary: {job.salary}</p>
 
             <button
               disabled={alreadyApplied}
@@ -130,7 +143,7 @@ function Dashboard({ phone }) {
         );
       })}
 
-      {/* APPLICATIONS */}
+      {/* My Applications */}
       <h1>My Applications</h1>
 
       {applications.length === 0 ? (

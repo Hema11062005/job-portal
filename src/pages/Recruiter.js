@@ -19,7 +19,7 @@ function Recruiter() {
   const fetchApplications = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/all-applications"
+        "http://job-portal-bac.onrender.com/all-applications"
       );
       setApplications(res.data);
     } catch (error) {
@@ -29,7 +29,7 @@ function Recruiter() {
 
   const sendNotification = async () => {
     try {
-      const res = await axios.post("http://localhost:5000/notify", {
+      const res = await axios.post("http://job-portal-bac.onrender.com/notify", {
         phone,
         message,
       });
@@ -42,7 +42,7 @@ function Recruiter() {
 
   const postJob = async () => {
     try {
-      const res = await axios.post("http://localhost:5000/jobs", {
+      const res = await axios.post("http://job-portal-bac.onrender.com/jobs", {
         title,
         company,
         location,
@@ -63,7 +63,7 @@ function Recruiter() {
   const updateStatus = async (phone, jobTitle, status) => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/update-status",
+        "http://job-portal-bac.onrender.com/update-status",
         {
           phone,
           jobTitle,

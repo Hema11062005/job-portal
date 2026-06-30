@@ -11,20 +11,20 @@ function Dashboard({ phone }) {
   const [message, setMessage] = useState("");
 
   const fetchJobs = async () => {
-    const res = await axios.get("http://your-backend.onrender.com/jobs");
+    const res = await axios.get("http://job-portal-bac.onrender.com/jobs");
     setJobs(res.data);
   };
 
   const fetchApplications = async () => {
     const res = await axios.get(
-      `http://your-backend.onrender.com/applications/${phone}`
+      `http://job-portal-bac.onrender.com/applications/${phone}`
     );
     setApplications(res.data);
   };
 
   const fetchNotifications = async () => {
     const res = await axios.get(
-      `http://your-backend.onrender.com/notifications/${phone}`
+      `http://job-portal-bac.onrender.com/notifications/${phone}`
     );
 
     setNotifications(res.data);
@@ -37,7 +37,7 @@ function Dashboard({ phone }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchJobs();
-    fetchApplications();
+    fetchAppliyour-backend.onrender.comcations();
     fetchNotifications();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -60,7 +60,7 @@ function Dashboard({ phone }) {
   }, [phone]);
 
   const applyJob = async (jobTitle) => {
-    const res = await axios.post("http://your-backend.onrender.com/apply", {
+    const res = await axios.post("http://job-portal-bac.onrender.com/apply", {
       jobTitle,
       applicantPhone: phone,
     });

@@ -1,25 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import CandidateLogin from "./pages/CandidateLogin";
+import RecruiterLogin from "./pages/RecruiterLogin";
+import Dashboard from "./pages/Dashboard";
+import Recruiter from "./pages/Recruiter";
+import "./App.css";   // ← IMPORTANT
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [page, setPage] = useState("home");
+  const [candidatePhone, setCandidatePhone] = useState("");
+
+  if (page === "home") {
+    return (
+      <div className="login-container">
+        <h1>Job Portal</h1>
+
+        <button onClick={() => setPage("candidateLogin")}>
+          Candidate Login
+        </button>
+
+        <button onClick={() => setPage("recruiterLogin")}>
+          Recruiter Login
+        </button>
+      </div>
+    );
+  }
+
+  if (page === "candidateLogin") {
+    return (
+      <CandidateLogin
+        setCandidatePhone={setCandidatePhone}
+        setPage={setPage}
+      />
+    );
+  }
+
+  if (page === "recruiterLogin") {
+    return <RecruiterLogin setPage={setPage} />;
+  }
+
+  if (page === "dashboard") {
+    return <Dashboard phone={candidatePhone} />;
+  }
+
+  if (page === "recruiter") {
+    return <Recruiter />;
+  }
+
+  return null;
 }
 
 export default App;

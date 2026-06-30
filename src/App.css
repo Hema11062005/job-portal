@@ -1,38 +1,192 @@
-.App {
+/* Global */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f7fb;
+}
+
+/* Containers */
+.login-container,
+.dashboard,
+.recruiter-container {
+  width: 80%;
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Headings */
+h1, h2, h3 {
+  color: #333;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Inputs */
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+/* Buttons */
+button {
+  padding: 12px 20px;
+  margin: 8px 5px;
+  border: none;
+  border-radius: 8px;
+  background: #007bff;
   color: white;
+  cursor: pointer;
+  font-size: 15px;
+  transition: 0.3s;
 }
 
-.App-link {
-  color: #61dafb;
+button:hover {
+  background: #0056b3;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Job cards */
+.job-card {
+  background: #f9fafc;
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.job-card h2,
+.job-card h3 {
+  margin-top: 0;
+  color: #222;
+}
+
+.job-card p {
+  margin: 6px 0;
+  color: #555;
+}
+
+/* Success message */
+.success-message {
+  color: green;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Status Colors */
+.status-applied {
+  color: orange;
+  font-weight: bold;
+}
+
+.status-shortlisted {
+  color: blue;
+  font-weight: bold;
+}
+
+.status-selected {
+  color: green;
+  font-weight: bold;
+}
+
+.status-rejected {
+  color: red;
+  font-weight: bold;
+}
+
+/* Horizontal line */
+hr {
+  margin: 30px 0;
+  border: 0;
+  height: 1px;
+  background: #ddd;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #eef2f7;
+}
+
+.login-container {
+  width: 500px;
+  margin: 120px auto;
+  padding: 50px 40px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  text-align: center;
+}
+
+.login-container h1 {
+  margin-bottom: 40px;
+  color: #222;
+  font-size: 48px;
+}
+
+button {
+  padding: 14px 28px;
+  margin: 10px;
+  border: none;
+  border-radius: 10px;
+  background: #1677ff;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #0b5ed7;
+  transform: translateY(-2px);
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #222;
+  color: white;
+  padding: 15px 30px;
+}
+
+.notification-bell {
+  position: relative;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.badge {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background: red;
+  color: white;
+  font-size: 12px;
+  padding: 3px 7px;
+  border-radius: 50%;
+}
+
+.notification-panel {
+  width: 350px;
+  background: white;
+  box-shadow: 0 0 10px gray;
+  padding: 15px;
+  margin: 10px auto;
+  border-radius: 10px;
+}
+
+.notification-card {
+  padding: 12px;
+  margin-bottom: 10px;
+  background: #f5f5f5;
+  border-radius: 8px;
 }

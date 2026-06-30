@@ -10,27 +10,21 @@ function Dashboard({ phone }) {
   const [unreadCount, setUnreadCount] = useState(0);
   const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    fetchJobs();
-    fetchApplications();
-    fetchNotifications();
-  }, []);
-
   const fetchJobs = async () => {
-    const res = await axios.get("http://localhost:5000/jobs");
+    const res = await axios.get("http://your-backend.onrender.com/jobs");
     setJobs(res.data);
   };
 
   const fetchApplications = async () => {
     const res = await axios.get(
-      `http://localhost:5000/applications/${phone}`
+      `http://your-backend.onrender.com/applications/${phone}`
     );
     setApplications(res.data);
   };
 
   const fetchNotifications = async () => {
     const res = await axios.get(
-      `http://localhost:5000/notifications/${phone}`
+      `http://your-backend.onrender.com/notifications/${phone}`
     );
 
     setNotifications(res.data);
@@ -39,6 +33,15 @@ function Dashboard({ phone }) {
     setUnreadCount(unread);
   };
 
+  // ✅ FIX 1: Add eslint disable (top useEffect)
+  useEffect(() => {
+    fetchJobs();
+    fetchApplications();
+    fetchNotifications();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // ✅ FIX 2: socket effect
   useEffect(() => {
     socket.emit("registerUser", phone);
 
@@ -51,10 +54,11 @@ function Dashboard({ phone }) {
     socket.on("notification", handleNotification);
 
     return () => socket.off("notification", handleNotification);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phone]);
 
   const applyJob = async (jobTitle) => {
-    const res = await axios.post("http://localhost:5000/apply", {
+    const res = await axios.post("http://your-backend.onrender.com/apply", {
       jobTitle,
       applicantPhone: phone,
     });

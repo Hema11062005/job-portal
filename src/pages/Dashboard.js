@@ -47,12 +47,14 @@ function Dashboard({ phone }) {
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchJobs();
     fetchApplications();
     fetchNotifications();
   }, []);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     socket.emit("registerUser", phone);
 

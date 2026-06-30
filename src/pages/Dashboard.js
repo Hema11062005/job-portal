@@ -34,6 +34,7 @@ function Dashboard({ phone }) {
   };
 
   // ✅ FIX 1: Add eslint disable (top useEffect)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchJobs();
     fetchApplications();
@@ -42,6 +43,7 @@ function Dashboard({ phone }) {
   }, []);
 
   // ✅ FIX 2: socket effect
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     socket.emit("registerUser", phone);
 

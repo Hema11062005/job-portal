@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import socket from "../Socket";
 
@@ -12,16 +12,16 @@ function Dashboard({ phone }) {
 
   const BACKEND_URL = "https://job-portal-bac.onrender.com";
 
-  const fetchJobs = async () => {
+  const fetchJobs = useCallback(async () => {
     try {
       const res = await axios.get(`${BACKEND_URL}/jobs`);
       setJobs(res.data);
     } catch (error) {
       console.log(error);
     }
-  };
+  }, []);
 
-  const fetchApplications = async () => {
+  const fetchApplications = useCallback(async () => {
     try {
       const res = await axios.get(
         `${BACKEND_URL}/applications/${phone}`
@@ -30,9 +30,9 @@ function Dashboard({ phone }) {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [phone]);
 
-  const fetchNotifications = async () => {
+  const fetchNotifications = useCallback(async () => {
     try {
       const res = await axios.get(
         `${BACKEND_URL}/notifications/${phone}`
@@ -45,16 +45,14 @@ function Dashboard({ phone }) {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [phone]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchJobs();
     fetchApplications();
     fetchNotifications();
-  }, []);
+  }, [fetchJobs, fetchApplications, fetchNotifications]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     socket.emit("registerUser", phone);
 
@@ -66,8 +64,10 @@ function Dashboard({ phone }) {
 
     socket.on("notification", handleNotification);
 
-    return () => socket.off("notification", handleNotification);
-  }, [phone]);
+    return () => {
+      socket.off("notification", handleNotification);
+    };
+  }, [phone, fetchApplications, fetchNotifications]);
 
   const applyJob = async (jobTitle) => {
     try {
@@ -85,7 +85,6 @@ function Dashboard({ phone }) {
 
   return (
     <div>
-      {/* Navbar */}
       <div className="navbar">
         <h1>Candidate Dashboard</h1>
 
@@ -100,7 +99,6 @@ function Dashboard({ phone }) {
         </div>
       </div>
 
-      {/* Notification Panel */}
       {showNotifications && (
         <div className="notification-panel">
           <h3>Notifications</h3>
@@ -117,10 +115,8 @@ function Dashboard({ phone }) {
         </div>
       )}
 
-      {/* Success Message */}
       {message && <p>{message}</p>}
 
-      {/* Available Jobs */}
       <h1>Available Jobs</h1>
 
       {jobs.map((job, index) => {
@@ -145,7 +141,6 @@ function Dashboard({ phone }) {
         );
       })}
 
-      {/* My Applications */}
       <h1>My Applications</h1>
 
       {applications.length === 0 ? (
